@@ -1,0 +1,40 @@
+/* Populate store table */
+INSERT INTO store (`StoreID`, `StoreName`, `StoreAddress`, `StoreCity`) VALUES ('1', 'Store 1', '15 Ridge st Brisbane Australia', 'Brisbane');
+INSERT INTO store (`StoreID`, `StoreName`, `StoreAddress`, `StoreCity`) VALUES ('2', 'Store 2', '18 Creek st Brisbane Australia','Brisbane');
+INSERT INTO store (`StoreID`, `StoreName`, `StoreAddress`, `StoreCity`) VALUES ('3', 'Store 3', '86 Pool st Sydney Australia', 'Sydney');
+
+/* Populate warehouse table */
+INSERT INTO warehouse (`WarehouseID`, `WarehouseName`, `WarehouseAddress`, `WarehouseCity`) VALUES ('1', 'Warehouse 1', '822 Dog st Brisbane Australia', 'Brisbane');
+INSERT INTO warehouse (`WarehouseID`, `WarehouseName`, `WarehouseAddress`, `WarehouseCity`) VALUES ('2', 'Warehouse 2', '87 Cat st Sydney Australia', 'Sydney');
+INSERT INTO warehouse (`WarehouseID`, `WarehouseName`, `WarehouseAddress`, `WarehouseCity`) VALUES ('3', 'Warehouse 3', '54 Fish st Melbourne Australia', 'Melbourne');
+
+/* Populate sorder table */
+INSERT INTO sorder 
+    (`StoreOrderID`, `StoreID`, `WarehouseID`, `StoreOrderCost`, `DeliveryID`) 
+    VALUES ('1', '1', (
+        SELECT WarehouseID
+        FROM  warehouse
+        WHERE (
+	        SELECT StoreAddress
+	        FROM store
+	        WHERE StoreID = 1
+        ) LIKE CONCAT('%', WarehouseCity, '%')
+    ), '20', null);
+
+INSERT INTO sorder 
+    (`StoreOrderID`, `StoreID`, `WarehouseID`, `StoreOrderCost`, `DeliveryID`) 
+    VALUES ('2', '3', (
+        SELECT WarehouseID
+        FROM  warehouse
+        WHERE (
+	        SELECT StoreAddress
+	        FROM store
+	        WHERE StoreID = 3
+        ) LIKE CONCAT('%', WarehouseCity, '%')
+    ), '20', null);
+
+
+
+
+
+                            
